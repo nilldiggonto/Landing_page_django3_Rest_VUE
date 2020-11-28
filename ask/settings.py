@@ -27,6 +27,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #app
+    'rest_framework',
+    'rest_framework.authtoken',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -116,3 +120,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 ## MEDIA
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+##USING CUSTOM USER MODEL
+AUTH_USER_MODEL = 'users.CustomUser'
