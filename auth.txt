@@ -1,0 +1,4 @@
+pip install django-rest-auth
+pip install django-allauth
+pip install django-registration
+pip install django-bootstrap4
