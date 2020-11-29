@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'bootstrap4',
     'rest_framework.authtoken',
+    #created app
     'users.apps.UsersConfig',
+    'questions.apps.QuestionsConfig',
 ]
 
 MIDDLEWARE = [
