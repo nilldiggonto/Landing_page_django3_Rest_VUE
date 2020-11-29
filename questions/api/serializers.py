@@ -11,10 +11,10 @@ class AnswerSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Answer
-        exclude = ('questions','voters','updated_at',)
+        exclude = ('question','voters','updated_at',)
 
     def get_created_at(self,instance):
-        return instance.created_at.strftime("%B %d  %Y")
+        return instance.created_at.strftime("%B %d,%Y")
     
     def get_likes_count(self,instance):
         return instance.voters.count()
@@ -37,7 +37,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         exclude = ['updated_at',]
 
     def get_created_at(self,instance):
-        return instance.created_at.strftime("%B %d %Y")
+        return instance.created_at.strftime("%B %d,%Y")
 
     def get_answer_count(self,instance):
         return instance.answers.count()
