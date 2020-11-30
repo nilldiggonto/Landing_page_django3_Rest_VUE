@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'bootstrap4',
     'rest_framework.authtoken',
+    #webpack
+    'webpack_loader',
     #created app
     'users.apps.UsersConfig',
     'questions.apps.QuestionsConfig',
@@ -156,4 +158,12 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 2
+}
+
+#webpack loader
+WEBPACK_LOADER = {
+    'DEFAULT':{
+        'BUNDLE_DIR_NAME':'dist/',
+        'STATS_FILE': os.path.join(BASE_DIR,'frontend','webpack-stats.json'),
+    }
 }
