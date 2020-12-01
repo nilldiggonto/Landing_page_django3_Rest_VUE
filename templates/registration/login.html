@@ -3,18 +3,18 @@
 {%block content %}
 
 <div class="container mt-4">
-  <div class="row">
-      <div class="col-md-6 offset-md-3">
-          <div class="card text-center" style="margin-top: 15%;">
-              
-            
-                <div class="card border-primary" >
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card text-center" style="margin-top: 15%;">
+
+
+                <div class="card border-primary">
                     <div class="card-header bg-primary text-white">
                         <h1>Ask Anything</h1>
                         <hr>
                         <h4>Login</h4>
                     </div>
-            
+
                     <div class="card-body">
                         <form action="" class="form" method="POST">
                             {% csrf_token %}
@@ -23,13 +23,14 @@
                         </form>
                     </div>
                     <div class="card-footer bg-secondary">
-                        <p>Don't have an account!! <a href="{% url 'django_registration_register' %}">Register Here</a></p>
+                        <p>Don't have an account!! <a href="{% url 'django_registration_register' %}">Register Here</a>
+                        </p>
                     </div>
-          
-              </div>
-          </div>
-      </div>
-  </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
