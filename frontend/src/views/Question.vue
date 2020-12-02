@@ -18,11 +18,39 @@
          
       </blockquote>
       </div>
+      <div class="card-footer">
+           <div v-if="userHasAnswered">
+               <p>You have written an answer!</p>
+           </div>
+           <div v-else-if="showForm">
+               <form action="" class="card" @submit.prevent="onSubmit">
+                   <div class="card-header">
+                       <h4>Answer the question</h4>
+                   </div>
+                   <div class="card-body">
+                       <textarea class="form-control" v-model="newAnswerBody" 
+                       name="" id="" cols="30" rows="5" placeholder="type the answer here">
+                       </textarea>
+                   </div>
+                   <div class="card-footer">
+                       <button type="submit" class="btn btn-sm btn-block btn-success">Answer</button>
+                   </div>
+                   <p class="text-danger" v-if="error">{{error}}</p>
+               </form>
+           </div>
+           <div v-else>
+               <button class="btn btn-sm btn-primary" @click="showForm=true">I got the answer!</button>
+           </div>
+      </div>
       <div class="card-footer" >
           <AnswerComponent v-for="(answer,index) in answers" :key="index" :answer="answer"/>
-      </div>
-    </div>
 
+          
+      </div>
+      
+    </div>
+  <p v-show="loadingAnswers">Loading............</p>
+         <button v-show="next" @click="getQuestionAnswers" class="btn btn-primary btn-block">Load More</button>
 
     </div>
 </template>
@@ -44,7 +72,14 @@ export default {
     data(){
         return{
             question:{},
-            answers : []
+            answers : [],
+            newAnswerBody: null,
+            error:null,
+            userHasAnswered:false,
+            showForm:false,
+            next:null,
+            loadingAnswers:false,
+            
         }
     },
     methods:{
@@ -55,14 +90,43 @@ export default {
             let endpoint = `/api/q/questions/${this.slug}/`;
             apiService(endpoint).then(data=>{
                 this.question = data;
+                this.userHasAnswered = data.user_has_answered
                 this.setPageTitle(data.content)
             })
         },
         getQuestionAnswers(){
             let endpoint = `/api/q/questions/${this.slug}/answer/list/`;
+            if (this.next) {
+                endpoint =this.next;
+            }
+            this.loadingAnswers= true;
             apiService(endpoint).then(data=>{
-                this.answers = data.results
+                this.answers.push(...data.results);
+                this.loadingAnswers = false;
+                if(data.next){
+                    this.next = data.next
+                }
+                else{
+                    this.next = null
+                }
             })
+        },
+        onSubmit(){
+            if (this.newAnswerBody){
+                let endpoint = `/api/q/questions/${this.slug}/answer/`;
+                apiService(endpoint,'POST',{body:this.newAnswerBody}).then(data=>{
+                    this.answers.unshift(data)
+                })
+                this.newAnswerBody = null
+                this.showForm = false
+                this.userHasAnswered = true
+                if (this.error){
+                    this.error = null;
+                }
+            }
+            else{
+                this.error = "First write something!!"
+            }
         }
     },
     created(){
