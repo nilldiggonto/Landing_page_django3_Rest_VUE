@@ -21,6 +21,9 @@
         <router-link :to="{name:'About'}" class="nav-link">About </router-link>
       </li>
 
+   <li class="nav-item">
+        <router-link :to="{name:'Question_Edit'}" class="nav-link">Ask </router-link>
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="/accounts/logout/">Logout</a>
       </li>
