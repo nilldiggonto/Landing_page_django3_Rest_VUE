@@ -17,6 +17,8 @@
            </footer>
          
       </blockquote>
+
+      <QuestionAction v-if="isQuestionAuthor" :slug="question.slug"/>
       </div>
       <div class="card-footer">
            <div v-if="userHasAnswered">
@@ -58,6 +60,7 @@
 <script>
 import {apiService} from '../common/api.service'
 import AnswerComponent from '@/components/Answer.vue'
+import QuestionAction from "@/components/QuestionAction"
 export default {
     name: 'Question',
     props:{
@@ -67,7 +70,8 @@ export default {
         }
     },
     components:{
-        AnswerComponent
+        AnswerComponent,
+        QuestionAction
     },
     data(){
         return{
@@ -81,6 +85,11 @@ export default {
             loadingAnswers:false,
             requestUser:null,
             
+        }
+    },
+    computed:{
+        isQuestionAuthor(){
+            return this.question.author == this.requestUser;
         }
     },
     methods:{

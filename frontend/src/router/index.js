@@ -20,7 +20,7 @@ const routes = [
     props: true
   },
   {
-    path:'/ask',
+    path:'/ask/:slug?',
     name:'Question_Edit',
     component: QuestionEditor,
     props: true

@@ -23,6 +23,12 @@
 import {apiService} from '../common/api.service'
 export default {
     name: 'QuestionEditor',
+    props:{
+        slug:{
+            type:String,
+            required:false
+        }
+    },
     data(){
         return {
             question_body: null,
@@ -40,6 +46,10 @@ export default {
             else{
                 let endpoint = "/api/q/questions/"
                 let method =  "POST"
+                if (this.slug !== undefined){
+                    endpoint += `${this.slug}/`;
+                    method = "PUT"
+                }
                 apiService(endpoint,method,{content:this.question_body}).then(question_data=>{
                     this.$router.push(
                         {name:'Question_d',
@@ -47,6 +57,18 @@ export default {
                     )
                 })
             }
+        }
+    },
+    async beforeRouteEnter(to,from,next){
+        if(to.params.slug !== undefined){
+            let endpoint = `/api/q/questions/${to.params.slug}/`
+
+            let data = await apiService(endpoint);
+            return next(vm => (vm.question_body = data.content))
+      
+        }
+          else{
+            return next()
         }
     },
     created(){
