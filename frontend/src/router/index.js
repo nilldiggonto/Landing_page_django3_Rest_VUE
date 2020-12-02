@@ -31,6 +31,13 @@ const routes = [
     component: AnswerEditor,
     props: true
   },
+  {
+    path:'*',
+    name:'Page_Not_Found',
+    component: Home,
+    // props: true
+  },
+
 
 
 
