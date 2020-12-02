@@ -9,7 +9,10 @@
     </blockquote>
 
     <div v-if="isAnswerAuthor">
-        <button class="btn btn-sm btn-warning" type="submit">Edit</button>
+        <!-- <button class="btn btn-sm btn-warning" type="submit">Edit</button> -->
+        <router-link  class="btn btn-sm btn-warning" :to="{name:'Answer_Edit', params:{id:answer.id}}"
+        >Edit
+         </router-link>
         <button @click="triggerDeleteAnswer" class="btn btn-sm btn-primary ml-2" type="submit">Delete</button>
     </div>
     <hr />

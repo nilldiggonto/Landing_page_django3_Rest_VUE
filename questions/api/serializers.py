@@ -8,6 +8,7 @@ class AnswerSerializer(serializers.ModelSerializer):
 
     likes_count     = serializers.SerializerMethodField()
     user_has_voted  = serializers.SerializerMethodField()
+    question_slug   = serializers.SerializerMethodField() 
     
     class Meta:
         model = Answer
@@ -22,6 +23,9 @@ class AnswerSerializer(serializers.ModelSerializer):
     def get_user_has_voted(self,instance):
         request = self.context.get('request')
         return instance.voters.filter(pk = request.user.pk).exists()
+
+    def get_question_slug(self,instance):
+        return instance.question.slug
     
 
 #question serializers
@@ -31,6 +35,7 @@ class QuestionSerializer(serializers.ModelSerializer):
     slug                = serializers.SlugField(read_only=True)
     answer_count        = serializers.SerializerMethodField(read_only=True)
     user_has_answered   = serializers.SerializerMethodField(read_only=True)
+    
 
     class Meta:
         model = Question
