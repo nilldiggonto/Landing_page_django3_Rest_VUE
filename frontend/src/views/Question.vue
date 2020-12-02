@@ -43,7 +43,7 @@
            </div>
       </div>
       <div class="card-footer" >
-          <AnswerComponent v-for="(answer,index) in answers" :key="index" :answer="answer"/>
+          <AnswerComponent @delete-answer="deleteAnswer" :requestUser="requestUser" v-for="(answer,index) in answers" :key="index" :answer="answer"/>
 
           
       </div>
@@ -79,12 +79,16 @@ export default {
             showForm:false,
             next:null,
             loadingAnswers:false,
+            requestUser:null,
             
         }
     },
     methods:{
         setPageTitle(title){
             document.title = title;
+        },
+        setRequestUser(){
+            this.requestUser = window.localStorage.getItem('username')
         },
         getQuestionData(){
             let endpoint = `/api/q/questions/${this.slug}/`;
@@ -127,12 +131,24 @@ export default {
             else{
                 this.error = "First write something!!"
             }
+        },
+        async deleteAnswer(answer){
+            let endpoint = `/api/q/answer/${answer.id}/`;
+            try{
+                await apiService(endpoint,'DELETE')
+                this.$delete(this.answers,this.answers.indexOf(answer))
+                this.userHasAnswered = false;
+            }
+            catch(err){
+                console.log(err)
+            }
         }
     },
     created(){
         this.getQuestionData()
         console.log(this.question)
         this.getQuestionAnswers()
+        this.setRequestUser()
     }
 }
 </script>
