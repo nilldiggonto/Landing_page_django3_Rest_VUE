@@ -18,6 +18,9 @@
          
       </blockquote>
       </div>
+      <div class="card-footer" >
+          <AnswerComponent v-for="(answer,index) in answers" :key="index" :answer="answer"/>
+      </div>
     </div>
 
 
@@ -26,6 +29,7 @@
 
 <script>
 import {apiService} from '../common/api.service'
+import AnswerComponent from '@/components/Answer.vue'
 export default {
     name: 'Question',
     props:{
@@ -34,9 +38,13 @@ export default {
             required: true,
         }
     },
+    components:{
+        AnswerComponent
+    },
     data(){
         return{
-            question:{}
+            question:{},
+            answers : []
         }
     },
     methods:{
@@ -49,11 +57,18 @@ export default {
                 this.question = data;
                 this.setPageTitle(data.content)
             })
+        },
+        getQuestionAnswers(){
+            let endpoint = `/api/q/questions/${this.slug}/answer/list/`;
+            apiService(endpoint).then(data=>{
+                this.answers = data.results
+            })
         }
     },
     created(){
         this.getQuestionData()
         console.log(this.question)
+        this.getQuestionAnswers()
     }
 }
 </script>
