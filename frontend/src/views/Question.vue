@@ -45,7 +45,7 @@
            </div>
       </div>
       <div class="card-footer" >
-          <AnswerComponent @delete-answer="deleteAnswer" :requestUser="requestUser" v-for="(answer,index) in answers" :key="index" :answer="answer"/>
+          <AnswerComponent @delete-answer="deleteAnswer" :requestUser="requestUser" v-for="answer in answers" :key="answer.id" :answer="answer"/>
 
           
       </div>
