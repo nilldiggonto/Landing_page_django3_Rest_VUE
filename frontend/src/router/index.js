@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import Question from "../views/Question.vue"
 
 Vue.use(VueRouter);
 
@@ -10,6 +11,21 @@ const routes = [
     name: "Home",
     component: Home
   },
+  {
+    path:'/question/:slug',
+    name:'Question_d',
+    component: Question,
+    props: true
+  },
+
+
+
+
+
+
+
+
+
   {
     path: "/about",
     name: "About",

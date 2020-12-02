@@ -8,7 +8,10 @@
     
       <div class="card-body">
         <blockquote class="blockquote text-left">
-        <p class="mb-0">{{question.content}}</p>
+        <!-- <p class="mb-0">{{question.content}}</p> -->
+        <router-link style="text-decoration:none;font-size:30px;" class="mb-0" :to="{name:'Question_d',params:{slug: question.slug}}"> 
+          {{question.content}}
+        </router-link>
         <footer class="blockquote-footer">@{{question.author}} |
            <strong>
              <span class="text-info">Answer: {{question.answer_count}}</span>
@@ -41,7 +44,7 @@ export default {
   },
   methods:{
     getQuestion(){
-      let endpoint = 'api/q/questions/';
+      let endpoint = `/api/q/questions/`;
       apiService(endpoint).then(data=>{
         this.questions.push(...data.results);
       })
@@ -50,6 +53,7 @@ export default {
   created(){
     this.getQuestion()
     console.log(this.questions)
+    document.title = 'Ask Anything'
   }
 
 };
